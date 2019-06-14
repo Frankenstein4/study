@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-set全局操作</title>
+    <script src="./js/vue.min.js"></script>
+    <!-- 如果是引用vue.js使用VUE.set会报错，不能直接赋给data，必须赋给data里某个属性，但是如果是引用vue.min.js就不会报错了 -->
+</head>
+<body>
+    <div id="app">
+        <p>{{user.user}}</p>
+    </div>
+</body>
+<script>
+    var obj = {
+        user:'kskdahifh'
+    };
+var  app=new Vue({
+    el:"#app",
+    data:{
+        user:obj
+    }
+})
+</script>
+</html>

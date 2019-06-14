@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var a=prompt("输入一个数");
+			var b=parseInt(a);
+			for(var i=2;i<=b;i++){
+                if(i==b){
+                    document.writeln(i);
+                }
+                else if(b%i==0){
+                    document.writeln(i+",")
+                    b=b/i;
+                    i=1;
+                }
+            }
+		</script>
+
+	</body>
+</html>

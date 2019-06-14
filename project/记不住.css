@@ -1,0 +1,15 @@
+/* 关于弹性盒子布局 */
+.tope981-2 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tope981-3 {
+    width: 90%;
+    margin: 0 5%;
+    display: flex;
+    flex-wrap: wrap;
+}

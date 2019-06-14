@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="vue.js"></script>
+    <script src="vue-resource.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+        
+    // 实例化vue对象（MVVM中的View Model）
+    new Vue({
+        // vm控制的区块为id为app的div，此div中的所有vue指令均可以被vm解析
+        el:'#app',
+        data:{
+        // 数据 （MVVM中的Model）   
+        },
+        // created:function () {
+        //     this.$http.get("http://mobilecdn.kugou.com/api/v3/search/song?keyword=%E5%86%8D%E9%A3%9E%E8%A1%8C&page=1&pagesize=10").then(function(result){
+        //         var res = result.body;
+        //         console.log(res);
+        //     });
+        //     }
+        mounted:function() {
+            var url = "https://api.itooi.cn/music/netease/songList?key=579621905&id=3778678&limit=10&offset=0";
+            //在vue-resources中会自动在路径上加入callback的函数名，得到的结果就是result
+            this.$http.jsonp(url).then(function(result){
+               // var res = JSON.parse(JSON.parse(result.body));
+                console.log(result);
+            }).catch(function(error) {
+             // 处理 getJSON 和 前一个回调函数运行时发生的错误
+            console.log('发生错误！', error);
+            });
+        }
+
+    })
+
+
+</script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>跨域请求失败案例（网易云，酷狗，appcan都不可以</title>   
+
+<script src="vue.js"></script>
+<script src="vue-resource.js"></script>
+</head>
+
+<body>
+<!-- 定义一个vue的管理区块，（MVVM中的View） -->
+<div id="app">
+
+</div>
+
+</body>
+<script src="../jquery.min.js"></script>
+<script>
+
+    // 实例化vue对象（MVVM中的View Model）
+    new Vue({
+        // vm控制的区块为id为app的div，此div中的所有vue指令均可以被vm解析
+        el:'#app',
+        data:{
+        // 数据 （MVVM中的Model）   
+        },
+
+
+        mounted:function() {
+            var url = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E5%83%8F%E6%88%91%E8%BF%99%E6%A0%B7%E7%9A%84%E4%BA%BA&page=1&pagesize=20&showtype=1";
+            //在vue-resources中会自动在路径上加入callback的函数名，得到的结果就是result
+            this.$http.jsonp(url).then(function(result){
+               // var res = JSON.parse(JSON.parse(result.body));
+                console.log(result.body);
+            }).catch(function(error) {
+             // 处理 getJSON 和 前一个回调函数运行时发生的错误
+            console.log('发生错误！', error);
+            });
+        }
+    
+
+
+//     methods: { 
+//     getData () { 
+//     var self = this 
+//     $.ajax({ 
+//       url: 'http://mobilecdn.kugou.com/api/v3/search/song?keyword=%E5%86%8D%E9%A3%9E%E8%A1%8C&page=1&pagesize=10', 
+//       type: 'GET', 
+//       dataType: 'JSONP', 
+//       success: function (res) { 
+//           console.log(res.data);
+//         self.data = res.data.slice(0, 3) 
+//         self.opencode = res.data[0].opencode.split(',') 
+//       } 
+//     }) 
+//   } 
+// } 
+})
+</script>
+</html>

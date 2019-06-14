@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+    #divOne{
+        width: 400px;
+        height: 400px;
+        background: #d6f3d6;
+    }
+    #divTwo{
+        width: 200px;
+        height: 200px;
+        background: #ffff00;
+    }
+    #hr_three{
+        display: block;
+        width: 100px;
+        height: 100px;
+        background: #1591fa;
+    }
+    </style>
+</head>
+<body>
+    　　<form id="form1" runat="server">
+    　　　　<div id="divOne" onclick="alert('我是最外层');">
+    　　　　　　<div id="divTwo" >
+    　　　　　　　　<a id="hr_three" href="http://www.baidu.com" mce_href="http://www.baidu.com" >点击我</a>
+    　　　　　　</div>
+    　　　　</div>
+    　　</form>
+    </body>
+    <script src="jquery.min.js"></script>
+    <script src="utils.js"></script>
+    <script>
+    //阻止事件冒泡   方法一
+        // $(function() {
+        //     $("#hr_three").click(function(event) {
+        //         event.stopPropagation();//事件处理过程中，阻止了事件冒泡，但不会阻击默认行为（它就执行了超链接的跳转）
+        //     });
+        // });
+    
+    //阻止默认事件  也阻止默认行为  return false
+    // $("#hr_three").click(function(event){//event可写可不写
+    //             return false;
+    // })
+    
+    //阻止默认行为  但是不阻止事件冒泡
+    $("#hr_three").click(function(event){
+        event.preventDefault();    
+    })
+
+
+    //阻止事件捕获
+    $("#hr_three").click(function(event){
+        event.stopPropagation();   
+    })
+
+    $("#divTwo").click(function(event){
+        event.stopPropagation();   
+    })
+
+
+
+    var currentDate = new Date();
+  console.log(currentDate)//2019-5-23
+  var currentDay = formatDate(currentDate,"d");
+  console.log(currentDay);//目前是这一年的第几天
+  
+  var currentWeek = getWeekNumOfYear(currentDate);
+  console.log(currentWeek);//目前是这一年的第几周
+
+  var starttime = getWeekBeginDate(currentDate);
+   console.log(starttime);//时间
+  
+  var selectDate = formatDate(currentDate,"yyyy-MM-dd");
+    </script>
+</html>

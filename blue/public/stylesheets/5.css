@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.head{
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+    background: url(../images/img1/m5k2b.jpg) 42% 55%;
+    background-size: cover;
+    height: 200px;
+}
+h2{
+    color: #FFFFFF;
+}

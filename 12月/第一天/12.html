@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue12</title>
+    <style>
+        .table1{
+       
+        border: 1px solid black;
+        /* 去除表格单元格的空隙 */
+         border-collapse: collapse;
+    }
+    .table1 tr td{
+        border: 1px solid black;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 建立一个托管区域 -->
+    <div id="app">
+       <ul>
+           <li v-for="(item,index) in 10">
+               {{item}}-----{{index}}
+           </li>
+           <!-- 
+            上面代码对普通数字进行了循环
+            -->
+       </ul>
+     
+    </div>
+    <!-- 
+        在vue 里面还提供一种非常好的机制
+        数据联动机制
+     -->
+</body>
+<!-- 第一步先导入vue文件 -->
+<script src="../js/vue.js"></script>
+<script>
+    //创建vue对象
+    new Vue({
+        el: "#app",
+
+        //接管页面的区域  只要是#app里面的区域 都要从data里面获取
+        data: {
+           imgList:[
+               "../img/1.png",
+               "../img/2.png",
+               "../img/3.png",
+               "../img/4.png",
+               "../img/5.png",
+               "../img/6.png",
+               "../img/7.png",
+               "../img/8.png",
+           ]
+        //    像上面把每张图片都写出来很傻 因此我们可以以遍历的方式 或者自增的方式
+        }
+    })
+</script>
+
+</html>

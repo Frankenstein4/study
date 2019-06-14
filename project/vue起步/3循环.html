@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p v-for="a in message">{{a.text}}</p>
+    </div>
+</body>
+<script>
+var  app=new Vue({
+    el:"#app",
+    data:{
+       message:[
+           {text:"电脑太大眼睛太疼"},
+           {text:"何处是我朋友的家"},
+           {text:"橄榄树下的情人"}
+       ]
+    }
+})
+</script>
+</html>

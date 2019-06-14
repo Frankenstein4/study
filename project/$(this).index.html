@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="nav">
+        　　<p>111111</p>
+        　　<p>222222</p>
+        　　<b>333333</b>
+        　　<b>444444</b>
+        </div>
+        <p id="rq"></p>
+</body>    
+<script src="jquery.min.js"></script>
+<script src="3.js"></script>
+<script>
+// $(obj).index(this)基于对象选择下标； $(this).index()基于this同级所有元素的下标；
+
+　　$("b").click(function(){
+
+　　　　var num = $("b").index(this);
+
+　　　　var Index = $(this).index();
+
+　　　　alert(num);
+
+　　　　alert(Index);
+
+　　　　//则第一次弹出 0  再弹出 2；点击最后一个 b 先弹出 1 再弹出 3；
+
+　　});
+
+    getTime1();
+</script>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跨域测试（jsonp方式，失败，网易云，appcan，酷狗都不可以</title>
+    <style type="text/css">
+    button{
+        display: block;
+        width: 200px;
+        margin: auto;
+    }
+ 
+    td{
+        width: 150px;
+        height: 50px;
+        overflow: hidden;
+    }
+    </style>
+    <script src="../jquery.min.js"></script>
+</head>
+<body>
+    <input id="btn" type="button" value="跨域" />
+    <input id="btn1" type="button" value="清除" />
+    <input id="btn2" type="button" value="打印" />
+    <div id="list">
+        <table border="1px" cellspacing="0" id="listContent">
+            <tr>
+                <td colspan="8">
+                    <button id="del">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>lrc</td>
+                <td>名字</td>
+                <td>pic</td>
+                <td>歌手</td>
+                <td>时间</td>
+                <td>url</td>
+                <td>操作</td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+
+         //创建WEBSQL数据库
+         var dbname = "checkmissiondb";
+        //打开数据库    dbname名称   1024000数据库大小   
+        var db = openDatabase(dbname,'','',1024000);
+    $("#btn").click(function () {
+       bianLi();
+    });
+
+    //遍历接口导入  数据库
+    function bianLi(){
+        var sql="create table if not exists t1 ( id varchar(80)  not null ,lrc varchar(800),name varchar(800) ,pic varchar(800) ,singer varchar(800),time int(800),url varchar(4000),primary key (id))";
+        db.transaction(function(tx){
+            tx.executeSql(sql,[],function(tx,result){//tx.executeSql也可以带几个参数
+                  //成功的回调  
+                  console.log("创建t1成功！")
+            },function(tx, error){
+                 //失败的回调
+            })
+        })
+        $.ajax({
+            url: "https://api.itooi.cn/music/netease/songList?key=579621905&id=3778678&limit=10&offset=0",
+            type: "GET",
+            dataType: "json", //指定服务器返回的数据类型
+            data : {},
+            success: function (result,code) {
+                console.log(result);
+                if(result.code == 200){
+                   var song=result.data.songs;
+                   console.log(song);
+                   var len=song.length;
+                   if(len>0){
+                    db.transaction(function(tx){
+                        for(var i=0;i<len;i++){
+                            var f1=song[i].id;
+                            //console.log(f6);
+                            var f2=song[i].lrc;
+                            var f3=song[i].name;
+                            var f4=song[i].pic;
+                            var f5=song[i].singer;
+                            var f6=song[i].time;
+                           // console.log(f6);
+                            var f7=song[i].url;
+
+                            tx.executeSql("insert into t1 (id,lrc,name,pic,singer,time,url)values(?,?,?,?,?,?,?)",[f1,f2,f3,f4,f5,f6,f7],function(tx,result){
+                                     },function(){});
+                        }//for循环结束
+                    })
+                   }
+                }
+            }
+        });
+    }
+
+
+
+
+
+    //jquery  ready()方法 在文档加载后激活函数
+        $(document).ready(function(){
+            bianLi(); 
+            songListData();//在本地遍历数据 
+        });
+
+
+    $("#btn2").click(function(){
+        songListData();//在本地遍历数据
+    })
+
+    var dataall = [];
+        function songListData(){
+            db.transaction(function(tx){
+                tx.executeSql("select * from t1",[],function(tx,result){
+                     
+                      console.log(result);
+                      for(var i =0;i<result.rows.length;i++){
+                          dataall.push(result.rows.item(i));
+                      } 
+                      console.log(dataall)
+                     var data = {status:"0",data:dataall}
+                     getCheckListData(data)
+                          
+                },function(){})
+            }) 	
+        }
+
+
+        function getCheckListData(data){
+            if(data.status==0){
+                var str="";
+                var data=data.data;
+                console.log(data);
+                var lens=data.length;
+                console.log(lens);
+                    for(var i=0;i<lens;i++){
+                        var id=data[i].id;
+                        var lrc=data[i].lrc;
+                        var name=data[i].name;
+                        var pic=data[i].pic;
+                        var singer=data[i].singer;
+                        var time=data[i].time;
+                        var url=data[i].url;
+
+                    str+='<tr>'+
+'                <td>'+id+'</td>'+
+'                <td>'+lrc+'</td>'+
+'                <td>'+name+'</td>'+
+'                <td>'+pic+'</td>'+
+'                <td>'+singer+'</td>'+
+'                <td>'+time+'</td>'+
+'                <td>'+url+'</td>'+
+'                <td>'+
+'                  <input type="checkbox" name="item" value="'+id+'" id="">'+
+'               </td>'+
+'            </tr>';
+                    }
+                    $("#listContent").append(str);
+            }
+        }
+
+
+
+        //删除
+        $("#del").click(function(){
+            var arrs=[]; 
+            var item = $("input[name=item]:checked");
+            if(item.length<1){
+                alert("您未选中数据！");
+            }else{
+                item.each(function(index,value){
+                    arrs.push($(item).eq(index).val());
+               });
+               console.log(arrs);
+               db.transaction(function(tx){             
+               for(var i=0;i<arrs.length;i++){
+                    var delID=arrs[i];
+                    tx.executeSql("delete from t1 where id=?",[delID],function(tx,result){
+                      console.log(dataall); 
+                      location.reload(true);//刷新当前页面，有两个参数，true和false
+                    },function(){});
+               } 
+            })
+            }
+        })
+
+
+
+
+
+    //清除WEBSQL表t1
+    $("#btn1").click(function(){
+        var sql="drop table t1";
+        db.transaction(function(tx){
+            tx.executeSql(sql,[],function(tx,result){//tx.executeSql也可以带几个参数
+                  //成功的回调  
+                  console.log("删除t1成功！")
+            },function(tx, error){
+                 //失败的回调
+            })
+        })
+    })
+
+
+
+    // fetch("http://mobilecdn.kugou.com/api/v3/search/song?keyword=%E5%86%8D%E9%A3%9E%E8%A1%8C&page=1&pagesize=10", {
+    //         method: 'POST',
+    //         body: JSON.stringify(data),
+    //         mode: 'cors',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             "Accept": 'application/json',
+    //         }
+    //     })
+    // .then((data) => data.json())
+    // .then((resp) => console.log(resp))
+    // .catch((err) => console.log(err))
+    
+
+</script>
+</html>

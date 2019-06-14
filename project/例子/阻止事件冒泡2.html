@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        #divOne{
+            width: 400px;
+            height: 400px;
+            background: #d6f3d6;
+        }
+        #divTwo{
+            width: 200px;
+            height: 200px;
+            background: #ffff00;
+        }
+        #hr_three{
+            display: block;
+            width: 100px;
+            height: 100px;
+            background: #1591fa;
+        }
+        </style>
+    </head>
+    <body>
+        　　<form id="form1" runat="server">
+        　　　　<div id="divOne">
+        　　　　　　<div id="divTwo">
+        　　　　　　　　<a id="hr_three" href="http://www.baidu.com" mce_href="http://www.baidu.com">点击我</a>
+        　　　　　　</div>
+        　　　　</div>
+        　　</form>
+        </body>
+        <script src="jquery.min.js"></script>
+        <script>
+        $("#divOne").click(function(){
+            alert('我是最外层');
+            
+        })
+        
+        $("#divTwo").click(function(){
+            alert('我是中间层！');
+            event.stopPropagation();  
+        })
+        
+        $("#hr_three").click(function(){
+            event.stopPropagation();//阻止事件冒泡  也可以阻止事件捕获
+            event.preventDefault();//阻止默认行为
+            alert('我是最里层！');
+        })
+        </script>
+</html>

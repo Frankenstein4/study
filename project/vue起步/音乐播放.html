@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+       .all{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+       }
+       .all div{
+           width: 100px;
+           height: 50px;
+           border: 1px solid black;
+           text-align: center;
+           line-height: 50px;
+       }
+       .hd{
+           width: 100px ;
+           background-color: red;
+           height: 10px;
+           transition: all 1s linear;
+       }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="按钮" v-on:click="show"/>
+
+        <div style="margin:auto;width: 300px;">
+            <div class="all" @click="move">
+                <div data-id="0">1</div>
+                <div data-id="1">2</div>
+                <div data-id="2">3</div>
+            </div>
+            <div class="hd" :style="{'margin-left':yd+'px'}"></div>
+        </div>
+        
+        <div style="width: 300px; border: 1px solid black;">
+            <div v-for="(item,index) in list" style="margin:auto;width: 300px;height: 50px;border: 1px solid black;">
+                <div @click="play" :data-index="index">{{item.name}}---{{item.singer}}</div>
+             </div>
+             <audio :src="url" autoplay></audio>
+        </div>
+
+    </div>  
+    
+    <script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            id:0,
+            id1:null,
+            yd:0,
+            list:[
+            {
+                "id": "1349292048",
+                "name": "心如止水",
+                "singer": "Ice Paper",
+                "pic": "http://p2.music.126.net/MLQl_7poLz2PTON6_JZZRQ==/109951163938219545.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1349292048&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1349292048&key=579621905",
+                "time": 185
+            },
+            {
+                "id": "1361348080",
+                "name": "ME! (feat. Brendon Urie of Panic! At The Disco)",
+                "singer": "Taylor Swift/Brendon Urie",
+                "pic": "http://p2.music.126.net/ARDzEUlZ8g9rEdrLKoeIMg==/109951164025958391.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1361348080&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1361348080&key=579621905",
+                "time": 193
+            },
+            {
+                "id": "1345848098",
+                "name": "绿色",
+                "singer": "陈雪凝",
+                "pic": "http://p1.music.126.net/R4ZP3AJ9xV0vvw8LX7AbMA==/109951163860425334.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1345848098&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1345848098&key=579621905",
+                "time": 269
+            },
+            {
+                "id": "1357999894",
+                "name": "归去来兮",
+                "singer": "花粥",
+                "pic": "http://p1.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1357999894&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1357999894&key=579621905",
+                "time": 206
+            },
+            {
+                "id": "1346104327",
+                "name": "多想在平庸的生活拥抱你",
+                "singer": "隔壁老樊",
+                "pic": "http://p1.music.126.net/z-KH6R1-HP1lpCWSnmKy8Q==/109951163911444882.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1346104327&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1346104327&key=579621905",
+                "time": 269
+            },
+            {
+                "id": "1341964346",
+                "name": "你的酒馆对我打了烊",
+                "singer": "陈雪凝",
+                "pic": "http://p1.music.126.net/LiRR__0pJHSivqBHZzbMUw==/109951163816225567.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1341964346&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1341964346&key=579621905",
+                "time": 251
+            },
+            {
+                "id": "1313354324",
+                "name": "出山",
+                "singer": "花粥/胜娚",
+                "pic": "http://p1.music.126.net/xUAfdMHdXhu3BmO4g8nOYA==/109951163573311341.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1313354324&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1313354324&key=579621905",
+                "time": 200
+            },{
+                "id": "1336856777",
+                "name": "我曾",
+                "singer": "隔壁老樊",
+                "pic": "http://p2.music.126.net/KK3YNRE9flpcZCYkDS8Z3g==/109951163826159510.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1336856777&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1336856777&key=579621905",
+                "time": 285
+            },
+            {
+                "id": "1361988914",
+                "name": "孤单心事",
+                "singer": "颜人中",
+                "pic": "http://p2.music.126.net/0KCMOKHHbimwfdVvPPBpTA==/109951164034526943.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1361988914&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1361988914&key=579621905",
+                "time": 264
+            },
+            {
+                "id": "28481189",
+                "name": "Monsters",
+                "singer": "Katie Sky",
+                "pic": "http://p2.music.126.net/YPh291Jw4Lzy7x1iT_Aw5A==/109951163510035145.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=28481189&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=28481189&key=579621905",
+                "time": 217
+            },
+            {
+                "id": "1359595520",
+                "name": "大碗宽面",
+                "singer": "吴亦凡",
+                "pic": "http://p2.music.126.net/yDFbKhM9wIO0GWEuOvxhVg==/109951164007799327.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1359595520&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1359595520&key=579621905",
+                "time": 221
+            },
+            {
+                "id": "28111646",
+                "name": "只是太爱你",
+                "singer": "张敬轩",
+                "pic": "http://p2.music.126.net/MbAMGidLob2YUEsw732PXw==/18815942488049510.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=28111646&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=28111646&key=579621905",
+                "time": 251
+            },
+            {
+                "id": "574566207",
+                "name": "盗将行",
+                "singer": "花粥/马雨阳",
+                "pic": "http://p2.music.126.net/-qHPT3rhxDlu5zQV9NcQ-A==/109951163555860423.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=574566207&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=574566207&key=579621905",
+                "time": 198
+            },
+            {
+                "id": "1331819951",
+                "name": "像鱼",
+                "singer": "王贰浪",
+                "pic": "http://p2.music.126.net/ejEPGN6ulPSgCBXGq7dgqw==/109951163720047382.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=1331819951&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=1331819951&key=579621905",
+                "time": 285
+            },
+            {
+                "id": "441491828",
+                "name": "水星记",
+                "singer": "郭顶",
+                "pic": "http://p2.music.126.net/wSMfGvFzOAYRU_yVIfquAA==/2946691248081599.jpg?param=400y400",
+                "lrc": "https://api.itooi.cn/music/netease/lrc?id=441491828&key=579621905",
+                "url": "https://api.itooi.cn/music/netease/url?id=441491828&key=579621905",
+                "time": 325
+            }
+            ],
+            url:null,
+            index:null
+        },
+        methods: {
+            show: function () {
+                fetch("https://api.itooi.cn/music/netease/songList?key=579621905&id=3778678", {
+                }).then(result => {
+                    return result.json()
+                }).then(data => {
+                    console.log(data);
+                }).catch(err => {
+                    console.log(err);
+                })
+            },
+            move(e) {
+                this.id = e.target.dataset.id
+                if (this.id - this.id1 == "0") {
+                    this.yd = 0
+                    this.id1 = this.id
+                }
+                if (this.id - this.id1 == "1") {
+                    this.yd = (this.yd + 100)
+                    this.id1 = this.id
+                }
+                if (this.id - this.id1 == "-1") {
+                    this.yd = (this.yd - 100)
+                    this.id1 = this.id
+                }
+                if (this.id - this.id1 == "2") {
+                    this.yd = (this.yd + 200)
+                    this.id1 = this.id
+                }
+                if (this.id - this.id1 == "-2") {
+                    this.yd = (this.yd - 200)
+                    this.id1 = this.id
+                }
+            },
+            play(e) {
+                this.index = e.target.dataset.index
+                console.log(this.index)
+                this.url = this.list[this.index].url
+                var time = this.list[this.index].time
+
+                    if (time <= 0) {
+                      this.index=this.index+1
+                      console.log(this.index)
+                    }else{
+                        if (this.index < this.list.length - 1) {
+                            this.url = this.list[++this.index].url
+                            this.index = this.index
+                        } else {
+                            this.index = -1
+                            this.url = this.list[++this.index].url
+                        }
+                    }
+            }
+
+        },
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1">
+        <span>第一项</span>
+        <hr>
+        <p>第二项</p>
+        <div class="item">第三项</div>
+        <span>第四项</span>
+    </div>
+</body>
+<!-- <script src="jquery.min.js"></script> -->
+<script>
+//事件委托
+$("#div1").on("click",function(){
+    console.log(1111);
+})
+
+//直接绑定事件
+$("#div1>span").on("click",function(){
+    console.log(2222);
+})
+
+
+function $(selector){
+    return document.querySelectorAll(selector);
+    //这个方法返回的是一个NodeList的集合
+}
+
+/*
+内部jquery事件委托封装
+*/
+NodeList.prototype.on=function(){
+    var args=arguments;
+    if(arguments.length==2){
+        for(var i=0;i<this.length;i++){
+            this[i].addEventListener(arguments[1],function(event){
+                args[1].call(this.event);
+            })
+        }
+    }
+}
+
+</script>
+</html>

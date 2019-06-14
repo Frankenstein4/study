@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>component-pross属性</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+            <panda here="hello world"></panda>
+    </div>
+    <div id="app1">
+        <panda from-here="shfkdhsf"></panda>
+    </div>
+    <div id="app2">
+        <panda v-bind:here="message"></panda>
+    </div>
+</body>
+<script>
+        var app=new Vue({
+            el:'#app',
+            components:{
+                "panda":{
+                    template:`
+                    <div style="color:red">panda from {{here}}</div>
+                    `,
+                    props:['here']
+                }
+            }
+        })
+//上面代码定义了panda的组件，并用props设置了here的属性值，在here属性值里传递了hello world给组件
+
+
+        var app1=new  Vue({
+            el:'#app1',
+            components:{
+                "panda":{
+                    template:`
+                    <div>panda from {{fromHere}}</div>
+                    `,
+                    props:['fromHere']
+                }
+            }
+        })
+    //上面代码属性中带"-"代表驼峰式写法
+
+
+    var app2=new Vue({
+        el:'#app2',
+        data:{
+            message:'hello'
+        },
+        components:{
+            "panda":{
+                template:`
+                <div>panda from {{here}}</div>
+                `,
+                props:["here"]
+            }
+        }
+    })
+</script>
+</html>

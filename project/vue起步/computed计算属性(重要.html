@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{newPrice}}
+    </div>
+    <div id="app1">
+        <div v-for="(item,index) in reverseNews">{{item}}</div>
+    </div>
+</body>
+<script>
+    var app=new Vue({
+        el:'#app',
+        data:{
+            price:200
+        },
+        computed:{
+            newPrice:function(){
+                return this.price="￥"+this.price+"员"
+            }
+        }
+    })
+
+
+    var app1=new Vue({
+        el:'#app1',
+        data:{
+            list:[
+                {title:"121111111111",data:'2017/3/11'},
+                {title:"121111111111",data:'2017/3/20'},
+                {title:"121111111111",data:'2017/3/22'},
+                {title:"121111111111",data:'2017/3/26'},
+                {title:"121111111111",data:'2017/3/29'},
+            ]
+        },
+        computed:{
+            reverseNews:function(){
+                return this.list.reverse();
+            }
+        }
+    })
+</script>
+</html>

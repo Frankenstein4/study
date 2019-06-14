@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue01</title>
+</head>
+<body>
+    <!-- 建立一个托管区域 -->
+    <div id="app">
+        <!-- 
+            数据绑定
+            vue可以通过简单的特定的语法，把
+            data里面的数据显示在页面上面
+         -->
+         <h1>{{userName}}</h1>
+         <h2 v-text="userName"></h2>
+         <!-- 
+             {{}} 相当于v-text   绑定一个文本的变量  ------innerText
+          -->
+          <hr>
+          <div v-text="msg"></div>
+          <div v-html="msg"></div>
+          <!-- 
+            v-html 可以理解成 innerHTML
+
+           -->
+    </div>
+</body>
+<!-- 第一步先导入vue文件 -->
+<script src="../js/vue.js"></script>
+<script>
+//创建vue对象
+new Vue({
+    el:"#app",
+
+    //接管页面的区域  只要是#app里面的区域 都要从data里面获取
+    data:{
+        userName:"杨虎",
+        msg:"<input type='text' placeholder='请输入信息' />"
+    }
+})
+</script>
+</html>

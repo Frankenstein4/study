@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header></header>
+    </div>
+</body>
+<script>
+
+        var header_a=Vue.extend({
+            template:`
+            <p>{{message}}--{{a}}</p>
+            `,
+            data:function(){
+                return{
+                    message:'hello world!'
+                }
+            },
+            props:["a"]
+        })
+        new header_a({propsData:{a:100}}).$mount("header")
+</script>
+</html>

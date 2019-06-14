@@ -1,0 +1,26 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/css/register.css">
+    <title>注册</title>
+</head>
+<body>
+    <form action="http://127.0.0.1:8000/registerpost" method="post" onSubmit="return check();">
+         <p>账号:<input type="text" name="username" placeholder="请输入6到12位的英文加数字"><span></span></p>
+         <p>密码:<input type="password" name="spwd" placeholder="请输入6到16位的英文加数字"><span></span></p>
+         <p>确认密码:<input type="password" ><span></span></p>
+         <input type="submit" value="确定注册,注册成功后自动跳转至登录页面">
+         <%if(sign==2){%>
+            <font>请注册</font>
+         <%}else if(sign==1){%>
+            <font>账号注册成功</font>
+         <%}else if(sign==0){%>
+            <font>账号已存在无法注册请换个账号重新尝试</font>
+         <%}%>
+    </form>
+</body>
+<script src="/js/register.js" type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+       .all{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+       }
+       .all div{
+           width: 100px;
+           height: 50px;
+           border: 1px solid black;
+           text-align: center;
+           line-height: 50px;
+       }
+       .hd{
+           width: 100px ;
+           background-color: red;
+           height: 10px;
+           transition: all 0.2s linear;
+       }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="按钮" v-on:click="show"/>
+
+
+        <div style="margin:auto;width: 300px;">
+            <div class="all" @click="move">
+                <div data-id="0">1</div>
+                <div data-id="1">2</div>
+                <div data-id="2">3</div>
+            </div>
+            <div class="hd" :style="{'margin-left':yd+'px'}"></div>
+        </div>
+
+
+    </div>  
+    
+    <script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            id:0,
+            id1:null,
+            yd:0
+        },
+        methods:{
+            show: function () {
+                fetch("https://api.itooi.cn/music/netease/songList?key=579621905&id=3778678", {
+                }).then(result => {
+                    return result.json()
+                }).then(data => {
+                    console.log(data);
+                }).catch(err=>{
+                    console.log(err);
+                })
+            },
+          move(e){
+             this.id=e.target.dataset.id
+             if (this.id-this.id1=="0") {
+                 this.yd=0
+                 this.id1=this.id
+             }
+             if(this.id-this.id1=="1"){
+                this.yd=(this.yd+100)
+                 this.id1=this.id
+             }
+             if (this.id-this.id1=="-1") {
+                this.yd=(this.yd-100)
+                 this.id1=this.id
+             }
+             if (this.id-this.id1=="2") {
+                this.yd=(this.yd+200)
+                 this.id1=this.id
+             }
+             if (this.id-this.id1=="-2") {
+                this.yd=(this.yd-200)
+                 this.id1=this.id
+             }
+          }
+        }
+    })
+</script>
+</body>
+</html>

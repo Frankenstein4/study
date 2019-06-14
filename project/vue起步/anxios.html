@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="fontant.css">
+<script src="vue.js"></script>
+<script src="vue-resource.js"></script>
+<title>Document</title>   
+<style type="text/css">
+ *{
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+#app{
+    background-color: rgba(0,0,0,0.02);
+}
+.header{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 3.4em;
+    background-color: #cf3d3e;
+}
+.header h4{
+    color: #ffffff;
+}
+.header-title{
+    display: flex;
+    background-color: white;
+    list-style: none;
+}
+.flex-1{
+    flex: 1;  
+}
+.flex-1>li{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 3em;
+    flex-direction: column;
+}
+.flex-1>li.active{
+        color: #e54847;
+        font-weight: bold;
+}
+.bor{
+    width: 100%;
+    height: 2px;
+    background: #ffffff;
+}
+.bar{
+    width: 33.33%;
+    height: 2px;
+    background-color: #e54847;
+    transition: all 0.2s linear;
+}
+
+.bar.active{
+    transform: translateX(100%);
+}
+.img{
+    height: 10em;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.imgpic{
+    width: 100%;
+    position: absolute;
+    top:-100px;
+}
+.content_center{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eaeaee;
+}
+.f1{
+    flex: 1;
+}
+.f2{
+    flex: 2;
+}
+.f3{
+    flex: 3;
+}
+.f4{
+    flex: 4;
+}
+.ty{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;  
+}
+.content_center_span{
+    padding: 10px;
+}
+.content_center_img{
+    width: 50%;
+}
+.content-vertical{
+    display: flex;
+    flex-direction: column;
+}
+.text-name{
+    font-size: 0.9em;
+}
+.text-singer{
+    font-size: 0.6em;
+}
+.icon{
+    font-family: "iconfont";
+    font-size: 40px;
+}
+.text-url{
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+<!-- 定义一个vue的管理区块，（MVVM中的View） -->
+<div id="app">
+    <div class="nav-header">
+        <div class="header">
+        <h4>网易云音乐</h4>
+        <p>{{msg1}}</p>
+        </div>
+        <div class="hh">
+        <ul class="header-title" @click="move">
+            <div class="flex-1">
+                <li data-id="0" @click="pagetaye=0">个性推荐</li>
+            </div>
+            <div class="flex-1">
+                <li data-id="1" @click="pagetaye=1">排行榜</li>
+            </div>
+            <div class="flex-1" @click="pagetaye=2">
+                <li data-id="2">歌单</li>
+            </div>
+        </ul>
+            <div class="bor">
+                <div class="bar" :style="{'margin-left':yd+'%'}"></div>
+            </div>
+        </div>
+        <div class="header-img">
+            <div class="img" v-show="pagetaye==0">
+                <img src="../../blue/public/images/img1/p2024399489.jpg">
+            </div>
+            <div class="img" v-show="pagetaye==1">
+                    <img class="imgpic" :src="songListPic">
+            </div>
+            <div class="img" v-show="pagetaye==2">
+                <img src="../../blue/public/images/img1/m5k2b.jpg">
+            </div>
+        </div>
+    </div>
+    <div class="content" v-show="pagetaye==0">敬请期待...</div>
+    <div class="content" v-show="pagetaye==1">
+        <div v-for="(item,index) in data" class="content_center">
+            <div class="f1 ty">
+                <span class="content_center_span">{{index+1}}</span>
+            </div>
+            <div class="f1 ty">
+                <img :src="item.pic" class="content_center_img">
+            </div>
+            <div class="f4">
+                <div class="content-vertical"> 
+                    <div class="text-name">{{item.name}}</div>
+                    <div class="text-singer">{{item.singer}}</div>
+                </div>
+            </div>
+            <div class="f2 ty">
+                <span class="icon" @click="togglePlaying" :data-index="index">&#xe650;</span>
+                <span class="icon">&#xe619;</span>
+            </div>
+            <a :href="item.url"></a>
+             
+        </div>
+       <audio :src="url" autoplay></audio>  
+    </div>
+    <div class="content" v-show="pagetaye==2">敬请期待...</div>
+</div>
+</body>
+<!-- <script src="../jquery.min.js"></script> -->
+<script>
+
+    // 实例化vue对象（MVVM中的View Model）
+    new Vue({
+        // vm控制的区块为id为app的div，此div中的所有vue指令均可以被vm解析
+        el:'#app',
+        data:{
+        // 数据 （MVVM中的Model）  
+        pagetaye: 0,
+        data:[],
+        songListName:"",
+        songListPic:"",
+        songListDescription:"",
+        id:0,
+        id1:null,
+        yd:0,
+        playing:false, //是否播放
+        url:null,
+        index:null,
+        msg1:""
+        },
+        methods:{
+            move(e){
+             this.id=e.target.dataset.id
+             if (this.id-this.id1=="0") {
+                 this.yd=0
+                 this.id1=this.id
+             }
+             if(this.id-this.id1=="1"){
+                this.yd=(this.yd+33.33)
+                 this.id1=this.id
+             }
+             if (this.id-this.id1=="-1") {
+                this.yd=(this.yd-33.33)
+                 this.id1=this.id
+             }
+             if (this.id-this.id1=="2") {
+                this.yd=(this.yd+66.66)
+                 this.id1=this.id
+             }
+             if (this.id-this.id1=="-2") {
+                this.yd=(this.yd-66.66)
+                 this.id1=this.id
+             }
+          },
+        //   togglePlaying(){
+        //     //this.setPlayingState(!this.playing);
+        //     this.$refs.audioRef.play()
+        //   },
+        togglePlaying(e){
+            this.index=e.target.dataset.index;
+            console.log(this.index)
+            this.url=this.data[this.index].url;
+        }
+        },
+        created:function() {
+            // 发送请求到服务器加载数据
+            //vue-resource发送get请求
+            this.$http.get("https://api.itooi.cn/music/netease/songList?key=579621905&id=3778678&limit=10&offset=0").then(function(result){
+               //得到响应的内容
+               var res = result.body;
+               var data=result.data.data.songs;
+               console.log(res);
+               console.log(data);
+               this.data=data;//指向data里面的data数组
+               this.songListName=result.data.data.songListName;
+               this.songListPic=result.data.data.songListPic;
+               this.songListDescription=result.data.data.songListDescription;
+               this.msg1="接口成功再返回"
+            });
+           
+            //vue-resource发送post请求
+            // this.$http.post("http://157.122.54.189:9093/api/addproduct",{"name":"小明"}).then(function(result){
+            //    var res = result.body;
+            //    alert(res.message);
+            // });
+        }
+    })
+</script>
+</html>

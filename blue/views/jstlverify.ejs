@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>'迷墙'官方注册页面</title>
+	<script src="../javascripts/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="../stylesheets/1.css">
+	<script>
+		$(function(){
+		  var $form_inputs =   $('form input');
+		  var $rainbow_and_border = $('.rain, .border');
+		  
+		  $form_inputs.bind('focus', function(){
+		  	$rainbow_and_border.addClass('end').removeClass('unfocus start');
+		  });
+		  $form_inputs.bind('blur', function(){
+		  	$rainbow_and_border.addClass('unfocus start').removeClass('end');
+		  });
+		  $form_inputs.first().delay(800).queue(function() {
+			$(this).focus();
+		  });
+		});
+		
+	</script>
+	</head>
+	<body id="home">
+		<div class="rain">
+			<div class="border start">
+					 <%if(sign==0){%>
+						<font>账号已存在无法注册请换个账号重新尝试</font>
+					 <%}%>
+				<form action="/register" method="POST" onSubmit="return check();">
+					<label for="name">姓名</label>
+					<input name="name" type="text" placeholder="请输入姓名"/>
+					<span></span>
+					<label for="pass">密码</label>
+					<input name="pass" type="password" placeholder="请输入密码"/>
+					<span></span>
+					<label for="pass">确认密码</label>
+					<input name="pwd" type="password" placeholder="请输入确认密码"/>
+					<span></span>	
+					<input type="submit" value="注册"/>
+					<a href="/index"><input type="button" value="已有账号?登录"/></a>
+				</form>
+			</div>
+		</div>
+	</body>
+	<script src="../javascripts/1.js" type="text/javascript" charset="utf-8"></script>
+</html>

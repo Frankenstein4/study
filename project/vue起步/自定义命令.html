@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="vue.js"></script>
+    <title>Vue.directive自定义命令</title>
+</head>
+<body>
+    <div id="app">
+        <div v-ly="color">{{num}}</div>
+        <div><button @click="add">dianji</button></div>
+    </div>
+</body>
+<script>
+        Vue.directive('ly',function(el,binding,vnode){
+            //el: dom元素
+            el.style="color:"+binding.value;
+            //bingding：  对象，里面有很多属性
+            console.log(binding);
+            //自定义指令有五个钩子函数
+        })
+
+
+new Vue({
+    el:'#app',
+    data:{
+        num:10,
+        color:"red"
+    },
+    methods:{
+        add:function(){
+            this.num++;
+        }
+    }
+})
+</script>
+</html>

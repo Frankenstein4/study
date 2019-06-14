@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>template模板</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+    <div id="app1">
+        <template id="demo1">
+            <h2>模板写法二</h2>
+        </template>
+    </div>
+    <div id="app2">
+
+    </div>
+</body>
+<script type="x-template" id="demo2">
+    <h2>wqkehbfiewh模板写法三</h2>
+</script>
+<script>
+
+// 1.直接写在选项里的模板
+var app=new Vue({
+    el:"#app",
+    data:{
+        message:'hello world!'
+    },
+    template:`
+    <h2>这就是模板写法一</h2>
+    `
+})
+
+// 2.写在template标签里的模板  
+var app1=new Vue({
+    el:"#app1",
+    data:{
+        message:'hello world!'
+    },
+    template:"#demo1"
+})
+
+// 3.写在script标签里的模板 这种写模板的方法，可以让模板文件从外部引入
+var app2=new Vue({
+    el:"#app2",
+    data:{
+        message:'hello world!'
+    },
+    template:"#demo2"
+})
+</script>
+</html>

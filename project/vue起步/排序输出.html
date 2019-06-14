@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+            <h4>循环输出</h4>
+        <div v-for="item in item">
+            
+           <span>{{item}}</span>
+        </div>
+        <h4>排序循环输出</h4>
+        <div v-for="item in sortItems">
+            <!-- 原来这里变成sortItems了呀 -->
+            <span>{{item}}</span>
+        </div>
+    </div>
+</body>
+<script>
+        function sortNumber(a,b){
+            return a-b
+            }
+
+        new Vue({
+            el:'#app',
+            data:{
+                item:[22,3,9,55,7,88],
+                items:[22,3,9,55,7,88]
+            },
+            computed:{
+                sortItems:function(){
+                    return this.items.sort(sortNumber);
+                }
+            }
+        })
+
+
+</script>
+</html>

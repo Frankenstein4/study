@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--国产浏览器启用高速模式-->
+    <meta name="rednerer" content="webkit">
+    <title>vue综合案例1</title>
+    <link rel="stylesheet" href="../css/bootstrapV3/css/bootstrap.min.css" type="text/css">
+    <script src="../css/bootstrapV3/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../css/bootstrapV3/js/bootstrap.min.js"></script>
+    <!--条件注释-->
+    <!--[if lt ie 9]>
+        <script src="../css/bootstrapV3/html5shiv.min.js" type="text/css"></script>
+        <script src="../css/bootstrapV3/respond.min.js" type="text/css"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class=" container" id="app">
+        <div class=" page-header">
+            <h2 class=" text-center text-primary">留言平台</h2>
+        </div>
+        <router-view v-if="">
+        <form class=" form-horizontal">
+            <div class=" form-group">
+                <label class=" control-label col-xs-2" for="">
+                    昵称
+                </label>
+                <div class=" col-xs-7">
+                    <input v-model="nickName" type="text" placeholder="请输入昵称" class=" form-control">
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class=" control-label col-xs-2" for="">
+                    性别
+                </label>
+                <div class=" col-xs-7">
+                    <select class=" form-control" v-model="sex">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class=" control-label col-xs-2" for="">
+                    留言内容
+                </label>
+                <div class=" col-xs-7">
+                    <textarea v-model="content" class=" form-control" placeholder="请输入留言内容"></textarea>
+                </div>
+                <div class=" col-xs-3">
+                    {{content.length<10?"输入不合法":""}}
+                </div>
+            </div>
+            <div class="form-group" v-show="isReady">
+                <div class=" col-xs-7 col-xs-offset-2">
+                    <button :disabled="isDisabled" type="button" class=" btn btn-block btn-primary" @click="submitContent">提交留言</button>
+                </div>
+            </div>
+        </form>
+    </router-view>
+        <hr>
+        <div class=" table-responsive" v-show="contentList.length>0">
+            <table class=" table table-hover table-bordered table-striped">
+                <tr>
+                    <td>序号</td>
+                    <td>昵称</td>
+                    <td>性别</td>
+                    <td>留言时间</td>
+                    <td>留言内容</td>
+                </tr>
+                <tr v-for="(item,index) in contentList">
+                    <td>{{index+1}}</td>
+                    <td>{{item.nickName}}</td>
+                    <td>{{item.sex}}</td>
+                    <td>{{item.c_time}}</td>
+                    <td>{{item.content}}</td>
+                </tr>
+            </table>
+        </div>
+        <p class=" text-info lead text-center" v-show="contentList.length<=0">
+            暂无留言内容
+        </p>
+        <ul>
+            <li>第一个：点击提交以后，现在已经可以添加留言了，这个时候，我希望把输入框里面的数据再清空一下</li>
+            <li>
+                第二个：日期要实现2018年12月11日 12:00:15的格式
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            nickName:"",
+            sex:"男",
+            content:"",
+            c_time:"",
+            contentList:[
+
+            ],
+            isDisabled:true
+        },
+        computed:{
+            isReady(){
+                if(this.nickName&&this.sex&&this.content){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        },
+        watch:{
+            content(newValue){
+                if(newValue.length<10){
+                    this.isDisabled=true;
+                }
+                else{
+                    this.isDisabled=false;
+                }
+            }
+        },
+        methods:{
+            submitContent(){
+                var {nickName,sex,content}=this.$data;   //解构取值
+
+                var date = new Date();
+                this.year = date.getFullYear();
+                this.month = date.getMonth() + 1;
+                this.date = date.getDate();
+                this.day = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")[date.getDay()];
+                this.hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                this.minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                this.second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+                var c_time =  this.year + "年" + this.month + "月" + this.date + "日 " + this.hour + ":" + this.minute + ":" + this.second + " " + this.day;
+
+                //解析赋值 
+                this.contentList.push({nickName,sex,content,c_time});
+                
+                // Ajax把数据传到服务器存储起来，就OK了吧
+
+                //清空变量
+                this.nickName="";
+                this.content="";
+            }
+        }
+    })
+</script>
+</html>

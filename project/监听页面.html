@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style type="text/css">
+        
+        p{
+            font-family: 微软雅黑;
+        }
+        
+        </style>
+    </head>
+
+    <body>
+            <a href="https://www.baidu.com/">百度一下</a>
+            <p>字体颜色</p>
+            <a href="http://www.cnblogs.com/liumengdie/" title="我的博客" target="_blank">Welcome</a>
+        <script type="text/javascript">
+
+
+                    //js监听是否在当前页面
+
+
+                    // 监听是否在当前页，并置为已读
+        // document.addEventListener("visibilitychange", function () {
+        // if (!document.hidden) {   //处于当前页面
+        //     alert(222);
+        //   }else{
+        //       alert(0000000);
+        //   }
+        // });
+
+
+
+        var b=getTime();  //距离1970年1月1日的毫秒数       
+      function getTime()        {       
+               return Date.now();
+         
+        }       
+         document.addEventListener('webkitvisibilitychange',function()        {             
+            if(document.webkitVisibilityState=='hidden')
+            {
+                b=getTime();
+             
+            }else
+            {                document.body.appendChild(document.createTextNode('间隔:'+(getTime()-b)))
+             
+            }
+        }) 
+               
+        document.addEventListener('mozvisibilitychange', function(){    
+                    if(document.mozVisibilityState=='hidden'){
+                b=getTime();
+             
+            }else{              
+                  document.body.appendChild(document.createTextNode('间隔:'+(getTime()-b)))
+             
+            }
+        })
+
+
+
+
+
+
+
+
+   
+                    var count = 1;
+                    var interval_output = null;
+                    function output_number() {
+                   // document.writeln(count + " ");
+                    count++;
+                    }
+                    // window 失去焦点，停止输出
+                    window.onblur = function() {
+                    clearInterval(interval_output);
+                    };
+                    // window 每次获得焦点
+                    window.onfocus = function() {
+                    // 每 1 秒在页面输出一个数
+                    interval_output = setInterval(function() {
+                    output_number();
+                    }, 1000);
+                    }
+
+
+
+
+
+
+
+            var jsonObjA = {
+                "Name": "MyName",
+                "Company": "MyCompany",
+                "Infos": [{
+                        "Age": "100"
+                    },
+                    {
+                        "Box": [{
+                                "Height": "100"
+                            },
+                            {
+                                "Weight": "200"
+                            }
+                        ]
+                    }
+                ],
+                "Address": "弗洛伦萨"
+            }
+            var jsonObjB = {
+                "Name": "MyName",
+                "Company": "MyCompany",
+                "Infos": [{
+                        "Age": "100"
+                    },
+                    {
+                        "Box": [{
+                                "Height": "100"
+                            },
+                            {
+                                "Weight": "200"
+                            }
+                        ]
+                    }
+                ],
+                "Address": "达芬奇的故乡"
+            }
+
+            function isObj(object) {
+                return object && typeof(object) == 'object' && Object.prototype.toString.call(object).toLowerCase() == "[object object]";
+            }
+
+            function isArray(object) {
+                return object && typeof(object) == 'object' && object.constructor == Array;
+            }
+
+            function getLength(object) {
+                var count = 0;
+                for(var i in object) count++;
+                return count;
+            }
+
+            function Compare(objA, objB) {
+                if(!isObj(objA) || !isObj(objB)) return false; //判断类型是否正确
+                if(getLength(objA) != getLength(objB)) return false; //判断长度是否一致
+                return CompareObj(objA, objB, true); //默认为true
+            }
+
+            function CompareObj(objA, objB, flag) {
+                for(var key in objA) {
+                    if(!flag) //跳出整个循环
+                        break;
+                    if(!objB.hasOwnProperty(key)) {
+                        flag = false;
+                        break;
+                    }
+                    if(!isArray(objA[key])) { //子级不是数组时,比较属性值
+                        if(objB[key] != objA[key]) {
+                            flag = false;
+                            break;
+                        }
+                    } else {
+                        if(!isArray(objB[key])) {
+                            flag = false;
+                            break;
+                        }
+                        var oA = objA[key],
+                            oB = objB[key];
+                        if(oA.length != oB.length) {
+                            flag = false;
+                            break;
+                        }
+                        for(var k in oA) {
+                            if(!flag) //这里跳出循环是为了不让递归继续
+                                break;
+                            flag = CompareObj(oA[k], oB[k], flag);
+                        }
+                    }
+                }
+                return flag;
+            }
+
+            var result = Compare(jsonObjA, jsonObjB);
+            console.log(result); // true or false
+        </script>
+    </body>
+
+</html>

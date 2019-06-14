@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>'迷墙'官方登录页面</title>
+	<script src="../javascripts/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="../stylesheets/2.css">
+	<script>
+		$(function(){
+		  var $form_inputs =   $('form input');
+		  var $rainbow_and_border = $('.rain, .border');
+		  /* Used to provide loping animations in fallback mode */
+		  $form_inputs.bind('focus', function(){
+		  	$rainbow_and_border.addClass('end').removeClass('unfocus start');
+		  });
+		  $form_inputs.bind('blur', function(){
+		  	$rainbow_and_border.addClass('unfocus start').removeClass('end');
+		  });
+		  $form_inputs.first().delay(800).queue(function() {
+			$(this).focus();
+		  });
+		});
+		function aa(){
+			var name=document.getElementsByTagName("input")[0].value;
+    		var pwd=document.getElementsByTagName("input")[1].value;
+			if(name==""||pwd==""){
+				alert("选项不能为空");
+				return false;
+			} 
+		}
+	</script>
+	</head>
+	<body id="home">
+		<div class="rain">
+			<div class="border start">
+					<%if(mark==0){%>
+						<span>帐号或密码错误</span>
+				<%}else if(mark==2){%>
+						<span>请登录</span>
+				<%}%>
+				<form action="/login" method="post" onsubmit="return aa()">
+					<label for="name">姓名</label>
+					<input name="name" type="text" placeholder="请输入姓名"/><br>
+					<label for="pass">密码</label>
+					<input name="pass" type="password" placeholder="请输入密码"/><br>
+          <input type="submit" value="登录"/>
+		  <a href="/jstlverify"><input type="button" value="注册"/></a>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

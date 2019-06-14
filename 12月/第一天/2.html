@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue02</title>
+</head>
+<body>
+    <!-- 建立一个托管区域 -->
+    <div id="app">
+        <!-- 
+            数据绑定
+            vue可以通过简单的特定的语法，把
+            data里面的数据显示在页面上面
+         -->
+         <input type="text" v-model="userName">
+         <!-- 
+             在表单元素里，如果要绑定，则使用v-model------value
+             其他元素我们可以使用 v-html v-text {{}}  -------innerHTML/innerText
+          -->
+         <hr>
+         <h1>{{userName}}</h1>
+         <h3>{{userName.length}}</h3>
+         <!-- 
+             因为这个地方的username与上面的输入框里username是同一变量
+             这个时候，当我们改变username的值的时候，页面上面所有使用了这个变量的地方都会自动
+             地发生改变
+          -->
+    </div>
+
+    <!-- 
+        在vue 里面还提供一种非常好的机制
+        数据联动机制
+     -->
+</body>
+<!-- 第一步先导入vue文件 -->
+<script src="../js/vue.js"></script>
+<script>
+//创建vue对象
+new Vue({
+    el:"#app",
+
+    //接管页面的区域  只要是#app里面的区域 都要从data里面获取
+    data:{
+        userName:"杨虎",
+        msg:"<input type='text' placeholder='请输入信息' />"
+    }
+})
+</script>
+</html>

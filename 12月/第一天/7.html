@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue07</title>
+    <style>
+    .table1{
+       
+        border: 1px solid black;
+        /* 去除表格单元格的空隙 */
+         border-collapse: collapse;
+    }
+    .table1 tr td{
+        border: 1px solid black;
+    }
+    </style>
+</head>
+<body>
+    <!-- 建立一个托管区域 -->
+    <div id="app">
+            <ul>
+                    <li v-for="(item,index) in stuList" v-show="item.age>=18">{{item.userName}}--------{{item.age}}</li>
+                </ul>
+    </div>
+    <!-- 
+        在vue 里面还提供一种非常好的机制
+        数据联动机制
+     -->
+</body>
+<!-- 第一步先导入vue文件 -->
+<script src="../js/vue.js"></script>
+<script>
+//创建vue对象
+new Vue({
+    el:"#app",
+
+    //接管页面的区域  只要是#app里面的区域 都要从data里面获取
+    data:{
+        stuList:[
+            {userName:"杨虎",age:18},
+            {userName:"张三",age:58},
+            {userName:"张苏",age:54},
+            {userName:"李四",age:14},
+            {userName:"王五",age:228},
+            {userName:"大萨达",age:8},
+        ]
+    }
+})
+</script>
+</html>

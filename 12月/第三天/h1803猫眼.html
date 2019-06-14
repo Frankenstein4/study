@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../第三天/css/flexbox.css">
+    <link rel="stylesheet" href="../第三天/css/iconfont.css">
+    <title>猫眼</title>
+    <style type="text/css">
+        *{
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    #app{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; 
+        }
+    .pageHeader{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        width: 100%;
+        height: 50px;
+        background-color: #e54847;
+    }
+    .topnav{
+        width: 100%;
+        display: flex;
+       background-color: white;
+    }
+    .topnav>li{
+        width: 50%;
+        display:flex;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+    }
+    .topnav>li.active{
+        color: #e54847;
+        font-weight: bold;
+    }
+    .bor{
+        width: 100%;
+        height: 2px;
+        background: lightgray;
+    }
+    .bar{
+        width: 50%;
+        height: 2px;
+        background-color: #e54847;
+        transform: translateX(0);
+        transition: all 0.2s linear;
+    }
+    
+    .bar.active{
+        transform: translateX(100%);
+    }
+    /* 
+    正在热映布局
+     */
+     .m-item{
+         margin: 10px 0;
+         font-size: 13px;
+        color: #666;
+     }
+     .m-item .left{
+           width: 70px;
+            margin-left: 15px;
+        }
+        .left img{
+            width: auto;
+            height: 90px;
+            display: block;
+            /* 解决img底部3px
+               也可以vertical-align:middle;
+             */
+        }
+        .m-item .right{
+            width: 60px;
+            margin-right: 15px;
+        }
+        .btnbuy{
+            width: 50px;height: 30px;
+            border-radius: 4px;
+            background-color:#e54847 ;
+            border: none;
+            color: white;
+        }
+        .btncoming{
+            width: 50px;height: 30px;
+            border-radius: 4px;
+            background-color:#3c9fe6 ;
+            border: none;
+            color: white;
+        }
+        .m-title{
+            font-size: 17px;
+            color: #333;
+            font-weight: 700;
+            padding-right: 5px;
+            flex-shrink: 1;
+            display: inline-block;
+            width: 197px;
+            height: 24px;
+            white-space: nowrap;
+	        text-overflow: ellipsis;
+	        overflow: hidden;
+        }
+        .m_sc{
+            margin-bottom: 6px;
+        }
+        .m_sc span{
+            font-weight: 700;
+            color: #faaf00;
+            font-size: 15px;
+        }
+        .content{
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* .ssmall{
+            display: inline-block;
+            width: 25px;
+            height: 15px;
+            overflow: hidden;
+            font-size: 10px;
+            color: white;
+            background-color: lightblue;
+            line-height: 15px;
+        }
+        .small{
+            display: inline-block;
+            width:25px;
+            height: 12px;
+            margin: 5px;
+            overflow: hidden;
+            font-size: 10px;
+            color: lightblue;
+            line-height: 12px;
+        } */
+        .m_star{
+            width: 202px;
+            height: 15px;
+            white-space: nowrap;
+	        text-overflow: ellipsis;
+	        overflow: hidden;
+            margin-bottom: 6px;
+        }
+        .m_week{
+            padding: 12px 15px 0;
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+        .foot{
+            height: 55px;
+            border-top: 1px solid gray;
+            display: flex;
+            flex-direction: row;
+            color: gray;
+        }
+        .foot>li{
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .foot>li.active{
+            color:#e54847;
+        }
+      
+    .pageHeader .icon{
+        font-family: "iconfont";
+        font-size: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        
+        <div class="pageHeader">
+            猫眼电影<span class="icon">&#xe680;</span>
+        </div>
+        
+        <div class="ss" v-show="pagetaye==0||pagetaye==1">
+        <ul class="topnav">
+            <li :class="{active:pagetaye==0}" @click="pagetaye=0">正在热映</li>
+            <li :class="{active:pagetaye==1}" @click="pagetaye=1">即将上映</li>
+        </ul>
+        <div class="bor">
+            <div class="bar" :class="{active:pagetaye==1}"></div>
+        </div>
+        </div>
+        <div class="ss" v-show="pagetaye==2">敬请期待影院功能</div>
+        <div class="ss" v-show="pagetaye==3">主人........</div>
+        <!-- 
+           正在热映电影 
+           :key="index" 代表每一项都不重复
+         -->
+         <!-- 
+             用content包含所有影片信息
+          -->
+         <div class="content">
+        <div class="hot" v-show="pagetaye==0">
+            <movieitem v-for="(item,index) in holist" :key="index" :m_item="item"></movieitem>
+        </div>
+        <div class="coming" v-show="pagetaye==1">
+            <movieitem v-for="(item,index) in coming" :key="index" :m_item="item">
+                {{item.comingTitle}}
+            </movieitem>
+        </div>
+    </div>
+
+    <div class="foot">
+        <li :class="{active:pagetaye==0}" @click="pagetaye=0">影片</li>
+        <li :class="{active:pagetaye==2}" @click="pagetaye=2">影院</li>
+        <li :class="{active:pagetaye==3}" @click="pagetaye=3">我的</li>
+    </div>
+    </div>
+    <template id="movieitem">
+        <div class="box">
+            <div class="m_week">
+                    <slot></slot>
+            </div>
+          <div class="m-item flex-row">
+            <div class="left">
+                <img :src="m_item.img" alt="">
+            </div>
+            <div class="center flex-1  justify-content-space-between">
+                 <div class="m-title" :title="m_item.nm">
+                     <h4>{{m_item.nm}}</h4>
+                     
+                    </div>
+                <div class="m_sc" v-if="m_item.globalReleased==true">观众评：<span>{{m_item.sc}}</span></div>
+                <div class="m_sc" v-else><span>{{m_item.wish}}</span>人想看</div>
+                <div class="m_star" :title="m_item.star">主演:{{m_item.star}}</div>
+                <div class="m-sc">{{m_item.showInfo}}</div>
+            </div>
+            <div class="right flex-row justify-content-center align-items-center">
+                <button type="button" class="btnbuy" v-if="m_item.globalReleased==true">购票</button>
+                <button type="button" class="btncoming" v-else>预售</button>
+            </div>
+        </div>
+    </div>
+    </template>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../第三天/json/hot.js"></script>
+<script src="../第三天/json/coming.js"></script>
+<script>
+    var movieitem = {
+        template: "#movieitem",
+        props: ["m_item"]
+    }
+    new Vue({
+        el: "#app",
+        data: {
+            pagetaye: 0,
+            holist: [],//代表正在热映
+            coming:[]
+            
+        },
+        components: {
+            movieitem
+        },
+        created() {
+            //vue创建完成后会自己完成
+            console.log(hot.movieList);
+            this.holist = hot.movieList;
+            this.coming = coming.coming;
+        }
+    })
+
+
+
+</script>
+
+</html>

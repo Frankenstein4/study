@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="vue.js"></script>
+    <title>构造器外部写局部注册组件</title>
+</head>
+<body>
+    <div id="app">
+        <ly></ly>
+    </div>
+    <div id="app1">
+        <ly1></ly1>
+    </div>
+</body>
+<script>
+
+
+            var ly={
+                template:`
+                    <div>jsafhbajshfdreh</div>
+                `
+            }
+
+            var app=new Vue({
+                el:'#app',
+                components:{
+                    "ly":ly
+                }
+            })
+//以上为构造器写局部组件的一个小例子
+
+
+
+
+
+
+            var city={
+                template:`
+                    <div>兰州</div>
+                `
+            }
+
+            var ly1={
+                template:`
+                <div>
+                <p>组件里再套组件,必须外部有一个div，否则city会消失</p>
+                <city></city>
+                </div>
+                `,
+                components:{
+                    "city":city
+                }
+            }
+
+
+            var app1=new Vue({
+                el:'#app1',
+                components:{
+                    "ly1":ly1
+                }
+            })
+//以上代码为套用组件
+</script>
+</html>

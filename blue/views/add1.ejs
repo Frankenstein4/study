@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+        <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+			.head{
+				background-color: #000000;
+                color: #FFFFFF;
+                width: 100%;
+                height: 800px;
+                padding-top: 30px;
+            }
+            td{
+                width: 150px;
+                height: 50px;
+            }
+            .span{
+	        display: inline-block;
+	        width: 150px;
+	        height: 50px;
+	        white-space: nowrap;
+	        text-overflow: ellipsis;
+	        overflow: hidden;
+            }
+            a{
+                display: inline-block;
+                width: 50%;
+                margin: 0 25%;
+                height: 50px;
+                line-height: 50px;
+                background-color: #FFFFFF;
+                color: #000000;
+                font-weight: 600;
+                border: none;
+                text-align: center;
+                text-decoration: none;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="head">
+            <table border="1px" cellspacing="0">
+                <tr>
+                    <th>图片地址1</th>
+                    <th>图片名</th>
+                    <th>价格</th>
+                    <th>描述</th>
+                    <th>图片地址2</th>
+                    <th>图片地址3</th>
+                </tr>
+              
+                  <%for(var i=0;i<x.length;i++){%>
+                      <tr>  
+                        <td><%=x[i].url1%></td>
+                        <td><%=x[i].name%></td>
+                        <td><%=x[i].price%></td>
+                        <td><span class="span" title="<%=x[i].describ%>">
+                            <%=x[i].describ%>
+                        </span></td>
+                        <td><%=x[i].url2%></td>
+                        <td><%=x[i].url3%></td>
+                    </tr>
+                      <%}%> 
+                      <tr>
+                            <td colspan="6">
+                                <a href="/add1_comm">增加商品</a>
+                            </td>
+                        </tr>     
+            </table>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3</title>
+<script>
+function getFullPath(obj) {
+    if (obj) {
+        //Internet Explorer 
+        if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
+            obj.select();
+            return document.selection.createRange().text;
+        } 
+        //Firefox
+        if (window.navigator.userAgent.indexOf("Firefox") >= 1) {
+            if (obj.files) {
+                return obj.files.item(0).getAsDataURL();
+            }
+            return obj.value;
+        } 
+
+        //兼容chrome、火狐等，HTML5获取路径       
+        if (typeof FileReader != "undefined") {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("pic").src = e.target.result + ""; 
+            }
+            reader.readAsDataURL(obj.files[0]);
+        } else if (browserVersion.indexOf("SAFARI") > -1) {
+            alert("暂时不支持Safari浏览器!");
+        }
+
+    } 
+}
+
+function showPic(obj) {
+    var fullPath = getFullPath(obj);
+    if (fullPath) {
+        document.getElementById("pic").src = fullPath + "";
+    }
+}
+
+
+
+//2
+function getRealPath(){
+  //获取当前网址，如： http://localhost:8083/myproj/view/my.jsp
+   var curWwwPath=window.document.location.href;
+   //获取主机地址之后的目录，如： myproj/view/my.jsp
+  var pathName=window.document.location.pathname;
+  var pos=curWwwPath.indexOf(pathName);
+  //获取主机地址，如： http://localhost:8083
+  var localhostPaht=curWwwPath.substring(0,pos);
+  //获取带"/"的项目名，如：/myproj
+  var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+ 
+ //得到了 http://localhost:8083/myproj
+  var realPath=localhostPaht+projectName;
+  alert(realPath);
+}
+
+
+
+//3
+function getObjectURL(file) {  
+     var url = null;  
+     if (window.createObjcectURL != undefined) {  
+         url = window.createOjcectURL(file);  
+     } else if (window.URL != undefined) {  
+         url = window.URL.createObjectURL(file);  
+     } else if (window.webkitURL != undefined) {  
+         url = window.webkitURL.createObjectURL(file);  
+     }  
+     return url;  
+ }
+ //使用方法
+//  $("#file").change(function(){
+//      var file = this.files[0];
+//      var url = getObjectURL(file);//blob:http://doamin.com/5376c16a-02f9-489f-b30c-97a1808d5724
+//  });
+
+
+</script>
+</head>
+<body>
+    <input type="file" id="#file" onchange="showPic(this)">
+    <img src="" id="pic">
+</body>
+</html>

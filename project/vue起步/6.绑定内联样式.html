@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div :style="{ 'color': color, 'fontSize': fontSize + 'px' }">绑定内联样式</div>
+        <div :style="[color,fontSize]">绑定内联样式</div>
+        <div v-for="(item,index) in yS">
+        <div :style="{'background':item.background}">
+            <p :style="{'color':item.color}">{{item.text}}</p>
+        </div>
+        <img src="../../blue/public/images/img1/111.jpg">
+        </div>
+    </div> 
+</body>
+<script>
+var  app=new Vue({
+    el:"#app",
+    data:{
+        color:"#d84c29",
+        fontSize:20,
+        yS:[
+            {color:"#2872e1",background:"#eaeaeb",text:"11111"},
+            {color:"#2872e1",background:"#eaeaeb",text:"22222"},
+            {color:"#2872e1",background:"blue",text:"66666"},
+        ]
+    }
+})
+</script>
+</html>
