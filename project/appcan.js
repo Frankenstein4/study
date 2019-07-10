@@ -935,7 +935,8 @@ appcan.button("#nav-left", "btn-act", function() {
 
 
 
-//19复选框选中会议室，pm5为选中的会议id拼接，可以多选；
+//19复选框选中会议室，pm5为选中的会议id拼接，可以多选;
+// 将"HYS000000","HYS000003","HYS000016"拼接成"HYS000000,HYS000003,HYS000016"
 var arrs=[];         
 var item = $("input[name=item]:checked");
  if(item.length>0){
@@ -1480,3 +1481,217 @@ db.transaction(function(tx){
                          }
                      })
 });
+
+
+
+
+
+
+//30跨页面调用方法
+//例子：
+appcan.window.evaluateScript('MA0044_0106','yinCang()');//MA0065_0106为页面,在其他页面登入
+
+
+
+
+
+
+//31、点进详情传入数据到下拉选框
+$('#select_opt1 option').each(function(index,value,array){
+    if($(this).html() == BUQIANQYMC){//BUQIANQYMC是详情内容，若下拉框内容有详情查询里的内容则下拉框选中为详情内容
+       $(this).attr("selected","selected");
+    }
+})
+
+
+
+
+
+
+//32、可报选岗位
+function changeCheck(i,b){
+    console.log(arrData1[i]);
+    var obj = document.getElementsByName("item");  
+    var bs = arrCheck.length;
+    console.log("arrCheck.length-----------"+bs);
+    if(obj[i].checked){
+        if(bs==b){          //b为可填报岗位
+            appcan.window.alert({
+                title : '提示',
+                content : '选择岗位超过可填报岗位！',
+                buttons : ['确定']
+            });
+            $("#duoxuan_"+i+"").removeAttr("checked");
+            return;
+        }
+        arrCheck.push(arrData1[i]); 
+        console.log(arrCheck);                 
+    }else{
+        var sc = arrData1[i].BS;
+        console.log(sc);
+        
+        arrCheck.splice(sc,1);
+        console.log(arrCheck);
+    }
+    var yixuan = arrCheck.length;
+    var leng = arrData1.length;
+    for(var m=0;m<leng;m++){
+        for(var j=0;j<yixuan;j++){
+            if(arrCheck[j].JIHUABH==arrData1[m].JIHUABH){
+                arrData1[m].BS=j;
+            }
+        }
+    }
+    
+    $("#yxzgw").html(yixuan);
+                                     
+}
+
+
+
+
+//动态添加实例
+var kk1;
+            function actionList(type) {
+                var pm1 = "20";
+                var pm2 = pageNo;
+                appcan.window.openToast("数据加载中", '', 5, 1);
+                var _url = url + '/ra?u1=' + encodeURIComponent(userId) 
+                         +'&t=31&bs=' + encodeURIComponent('M0031_0002') 
+                         +'&pm1=' + encodeURIComponent(pm1)
+                         +'&pm2=' + encodeURIComponent(pm2);
+                console.log(_url);
+                appcan.request.ajax({
+                    url : _url,
+                    type : 'get',
+                    dataType : 'json',
+                    data : {},
+                    success : function(data, status) {
+                        console.log(data);
+                        uexWindow.resetBounceView(type);
+                        if (data.status == 0) {
+                            var data = data.data;
+                            var len = data.length;
+                            var str = "";
+                            if(len == 0){  
+                                appcan.window.closeToast();
+                                return;
+                            }                            
+                            records =len ;
+                            if(len>0&&data[0].ERROR!=undefined&&data[0].ERROR!=""&&data[0].ERROR!=null){
+                                 appcan.window.closeToast();
+                                 appcan.window.alert({
+                                    title : '提示',
+                                    content : data[0].ERROR,
+                                    buttons : ['确定'],
+                                    callback : function(err, data, dataType, optId) {
+                                    }
+                                  });  
+                                  return; 
+                            }
+                            if(len>0&&data[0].error!=undefined&&data[0].error!=""&&data[0].error!=null){
+                                 appcan.window.closeToast();
+                                 appcan.window.alert({
+                                    title : '提示',
+                                    content : data[0].error,
+                                    buttons : ['确定'],
+                                    callback : function(err, data, dataType, optId) {
+                                    }
+                                  });  
+                                  return; 
+                            }
+                            var XUHAO = "";
+                            for (var i = 0; i < len; i++) {
+                                 var YINGPINDW1 = data[i].YINGPINDW1;YINGPINDW1=nullToBlank(YINGPINDW1);//应聘单位
+                                 var BIAOTI = data[i].BIAOTI;BIAOTI=nullToBlank(BIAOTI);//标题
+                                 var SJ =data[i].SJ;SJ=nullToBlank(SJ);//时间
+                                  var KK =data[i].KK;KK=nullToBlank(KK);//KK
+                                
+                                kk1=KK.split(",");
+                                console.log(kk1);
+                          
+                                
+                             var arrStr="";//重要  
+                         for(var j=0;j<kk1.length;j++){
+                            var kk2=kk1[j].split("(")
+                           arrStr+='<div class="ub ub-ac ub-f1 word bor-b1">'+
+'                              <div class="ub ub-f1 ub-ac">'+kk2[0]+'</div>'+
+'                              <div class="zhiyuan'+j+' ub-ac">第'+(j+1)+'志愿</div>'+
+'                          </div>'; 
+                        }
+                             
+                        
+                       str+='<div class="ub ub-ver">'+
+'                 <div class="mother1" style="margin-top:.5em;">'+
+'                     <div class="ub ub-f1 ub-ac umh4 bor-b1 uhide">'+
+'                         <div class="ub ub-ac min_w1 text-bc">序号：</div>'+
+'                         <div class="ub ub-ac ub-f1 word">\'+(i+1)+\'</div>'+
+'                     </div>'+
+'                    <div class="ub ub-f1 ub-ac umh4 bor-b2">'+
+'                         <div class="ub ub-ac min_w1 text-bc">'+
+'                             <img style="width: 1.5em" src="../slices/mingc1.png" />'+
+'                         </div>'+
+'                         <div class="ub ub-ac ub-f1 word txt1">'+BIAOTI+'</div>'+
+'                     </div>'+
+'                     <div class="ub ub-f1  umh4 bor-b2">'+
+'                         <div class="min_w1  text-bc" style="margin-top:.5em">'+
+'                              <img style="width: 1.2em" src="../slices/mingc2.png" />'+
+'                         </div>'+
+'                         <div class="ub ub-f1 ub-ver txt2" id="arrS">'+arrStr+'</div>'+
+'                     </div>'+
+'                     <div class="ub ub-f1 ub-ac umh4 bor-b2" style="border-bottom: none;"> '+
+'                         <div class="ub ub-ac min_w1 text-bc">'+
+'                             <img style="width: 1.5em" src="../slices/mingc3.png" />'+
+'                         </div>'+
+'                         <div class="ub ub-ac ub-f1 word txt2">'+SJ+'</div>'+
+'                     </div>'+
+'                 </div> '+
+'          </div>';
+                        
+                       
+                          
+                          
+                       
+                       
+                       
+                       
+                        
+                        
+                 } 
+                                
+                     
+                     
+                                
+                                
+                                
+                                                               
+                            if (pageNo == 1) {
+                                $("#listview").html(str);
+                            } else {
+                                $("#listview").append(str);
+                            }
+                           appcan.window.closeToast();
+                        } else {
+                            appcan.window.closeToast();
+                            appcan.window.alert({
+                                title : '提示',
+                                content : "请求失败，请重试",
+                                buttons : ['确定'],
+                                callback : function(err, data, dataType, optId) {
+                                }
+                            });
+                        }
+                    },
+                    error : function(e) {
+                        appcan.window.closeToast();
+                        uexWindow.resetBounceView(type);
+                        appcan.window.alert({
+                            title : '提示',
+                            content : '网络繁忙,请重试！',
+                            buttons : ['确定'],
+                            callback : function(err, data, dataType, optId) {
+                            }
+                        });
+                    }
+                });
+            }
