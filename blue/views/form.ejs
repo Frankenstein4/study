@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form表单</title>
+</head>
+<body>
+    <form action="/mm" method="POST" enctype="multipart/form-data">
+        <p><input type="file" name="uploadImg"></p>
+        <p><input type="submit" value="提交"></p>
+    </form>
+    <%if(status==1){%>
+        <p>恭喜上传成功！</p>
+    <%}%>
+</body>
+</html>

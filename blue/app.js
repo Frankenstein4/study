@@ -7,6 +7,7 @@ app.set('views', path.join(__dirname, 'views'));
 // app.set('views','./views');//引入文件路径
 app.set('view engine','ejs');//引入模板引擎
 app.use(express.static(path.join(__dirname, 'public')));//文件静态托管
+app.use(express.static(path.join(__dirname, 'upload')));
 // app.get("/",function(req,res){
 //       res.send("123");
 // })
