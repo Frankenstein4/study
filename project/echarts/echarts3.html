@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>echarts.js案例三</title>
+    <script type="text/javascript" src='./js/echarts.js'></script>
+    <script type="text/javascript" src="./jquery.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:600px;height:400px;"></div>
+</body>
+<script type="text/javascript">
+     
+     myChart=echarts.init(document.getElementById('chart'));//获取容器
+        //先设置完其它的样式，显示一个空的直角坐标轴，然后获取数据后填入数据
+                myChart.setOption({
+                    title: {
+                        text: '年龄示意图'
+                    },
+                    tooltip: {
+                        show:true,
+                    },
+                    legend: {
+                        data:['年纪']
+                    },
+                    xAxis: {
+                        data: []
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '年纪',
+                        // type:'pie',  
+                        // radius : '55%',//饼图的半径大小  
+                        // center: ['50%', '45%'],//饼图的位置  
+                        type:'bar',
+                        data: []
+                    }]
+                });
+
+
+
+        // 从接口获取数据(可以是从数据库获取，可以是自己写的接口数据)
+        var arr1=[];
+        var arr2=[];
+        $(document).ready(function(){
+                $.ajax({
+                    url:'http://localhost:3002/api',//接口自定义
+                    type: "GET",
+                    dataType: "json", //指定服务器返回的数据类型
+                    data : {},
+                    success:function(data){
+                        for(var i=0;i<data.length;i++){
+                            arr1.push(data[i].name);
+                            arr2.push(data[i].age);
+                        }
+                        myChart.setOption({
+                                xAxis: {
+                                    data:arr1
+                                },
+                                series: [{
+                                    // 根据名字对应到相应的系列
+                                    name: '年纪',
+                                    data: arr2
+                                }]
+                            });
+                        console.log(data)
+                    },
+                    error:function(err){
+                        console.log(err)
+                    }
+                })
+    });
+
+
+
+
+
+
+
+
+
+
+        // $.getJSON('http://localhost:63342/echart/loaddata/client.php',function(data){
+        //     myChart.setOption({
+        //         xAxis: {
+        //             data: data.categories
+        //         },
+        //         series: [{
+        //             // 根据名字对应到相应的系列
+        //             name: '销量',
+        //             data: data.data
+        //         }]
+        //     });
+        // });
+</script>
+</html>

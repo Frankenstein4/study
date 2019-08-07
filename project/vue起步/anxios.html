@@ -249,7 +249,7 @@
         created:function() {
             // 发送请求到服务器加载数据
             //vue-resource发送get请求
-            this.$http.get("https://api.itooi.cn/music/netease/songList?key=579621905&id=3778678&limit=10&offset=0").then(function(result){
+            this.$http.get("https://v1.itooi.cn/netease/artist/top?page=0&pageSize=30").then(function(result){
                //得到响应的内容
                var res = result.body;
                var data=result.data.data.songs;
@@ -260,7 +260,7 @@
                this.songListPic=result.data.data.songListPic;
                this.songListDescription=result.data.data.songListDescription;
                this.msg1="接口成功再返回"
-            });
+            })
            
             //vue-resource发送post请求
             // this.$http.post("http://157.122.54.189:9093/api/addproduct",{"name":"小明"}).then(function(result){

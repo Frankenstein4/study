@@ -1695,3 +1695,30 @@ var kk1;
                     }
                 });
             }
+
+
+
+
+
+//点击详情验证是否单选框含有查询数据让单选选中
+$('input[name=sfct]').each(function(index,value,array){                      
+    if($(this).val() == FUWUPJ){//服务评价
+       $(this).prop("checked",true);
+    }
+})
+
+
+
+
+//点击选中下拉选框触发事件
+$("#select_opt").change(function(){       
+    var sy=($("#select_opt").find("option:selected").val());
+     localStorage.setItem("MA0044_value",sy);
+     //alert(sy);
+     pageNo=1;
+     nameList(null); 
+})
+
+
+
+

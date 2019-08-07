@@ -29,17 +29,17 @@
         },
 
 
-        mounted:function() {
-            var url = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E5%83%8F%E6%88%91%E8%BF%99%E6%A0%B7%E7%9A%84%E4%BA%BA&page=1&pagesize=20&showtype=1";
-            //在vue-resources中会自动在路径上加入callback的函数名，得到的结果就是result
-            this.$http.jsonp(url).then(function(result){
-               // var res = JSON.parse(JSON.parse(result.body));
-                console.log(result.body);
-            }).catch(function(error) {
-             // 处理 getJSON 和 前一个回调函数运行时发生的错误
-            console.log('发生错误！', error);
-            });
-        }
+        // mounted:function() {
+        //     var url = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E5%83%8F%E6%88%91%E8%BF%99%E6%A0%B7%E7%9A%84%E4%BA%BA&page=1&pagesize=20&showtype=1";
+        //     //在vue-resources中会自动在路径上加入callback的函数名，得到的结果就是result
+        //     this.$http.jsonp(url).then(function(result){
+        //        // var res = JSON.parse(JSON.parse(result.body));
+        //         console.log(result.body);
+        //     }).catch(function(error) {
+        //      // 处理 getJSON 和 前一个回调函数运行时发生的错误
+        //     console.log('发生错误！', error);
+        //     });
+        // }
     
 
 
