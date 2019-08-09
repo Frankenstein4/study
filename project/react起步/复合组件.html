@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>复合组件</title>
+        <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+        <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <style type="text/css">
+        
+        .p1{
+            color: #DD3030;
+            font-size:30px;
+           }
+    </style>
+    </head>
+    <body>
+        <div id="example"></div>
+    <script type="text/babel">
+        //react使用jsx写法   设置虚拟dom
+       function Name(props){
+           return <h1>网站名称: {props.name}</h1>
+       }
+       function Url(props){
+           return <a>网站地址: {props.url}</a>
+       }
+       function Nickname(props){
+           return <h3>网站小名: {props.nickname}</h3>
+       }
+       
+       function App(){
+           return (
+           <div>
+               <Name name="百度" />
+               <Url url="www.baidu.com" />
+               <Nickname nickname="world" />
+           </div>
+           )
+       }
+       ReactDOM.render(
+       <App />,
+       document.getElementById('example')
+       )
+</script>
+    </body>
+</html>

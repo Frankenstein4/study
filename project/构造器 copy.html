@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>选项卡</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta charset="UTF-8">
+    <title>构造器</title>
     <style>
-        .on{ background: #f60; color: #fff}
-        .box div{
-            width:200px;
-            height:200px;
-            border: 1px solid #000;
-            display: none;
-        }
-    </style>
+            .on{ background: #f60; color: #fff}
+            .box div{
+                width:200px;
+                height:200px;
+                border: 1px solid #000;
+                display: none;
+            }
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .box{
+                width: 200px;
+                height: 200px;
+                margin-top: 50px
+            }
+        </style>
+</head>
+    
     <script>
 
 
@@ -54,7 +62,7 @@ Function.prototype.bind1=function (context) {
 
 
 
-    Function.prototype.bind2 = function (context) {
+        Function.prototype.bind2 = function (context) {
 
             if (typeof this !== "function") {
             throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
@@ -74,16 +82,6 @@ Function.prototype.bind1=function (context) {
             return fbound;
 
             }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -117,6 +115,32 @@ Function.prototype.bind1=function (context) {
         }
         //继承
         class AutoTab extends Tab{//第二要用，则继承前一个就好
+            constructor(id){
+                super(id);
+                this.aBtn1=document.getElementsByClassName('div2');
+                this.aDiv1=document.getElementById('box2');
+                // super.init();
+                this.auto();
+            }
+           
+            ff2(){
+                super.hide()
+            }
+            ff3(){
+                super.show()
+            }
+            auto(){
+                for(let i=0; i<this.aBtn1.length; i++){
+                    this.aBtn1[i].onclick=function(){
+                        this.color(i);
+                    }.bind(this);//重新绑定this的指向  指向tab???还是AutoTab??
+                }
+            }
+            color(i){
+                this.aDiv1.style.background="#8bde4f";
+                this.aDiv1.style.color="red";
+                
+            }
         }
 
 
@@ -136,9 +160,9 @@ Function.prototype.bind1=function (context) {
         <div>3333</div>
     </div>
     <div id="box2" class="box">
-        <input class="on" type="button" value="aaa">
-        <input type="button" value="bbb">
-        <input type="button" value="ccc">
+        <input class="on div2" type="button" value="aaa">
+        <input type="button" value="bbb" class="div2">
+        <input type="button" value="ccc" class="div2">
         <div style="display: block;">1111</div>
         <div>2222</div>
         <div>3333</div>

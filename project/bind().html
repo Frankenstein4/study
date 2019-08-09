@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+Function.prototype.bind2 = function (context) {
+
+if (typeof this !== "function") {
+  throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
+}
+
+var self = this;
+var args = Array.prototype.slice.call(arguments, 1);
+var fNOP = function () {};
+
+var fbound = function () {
+    self.apply(this instanceof self ? this : context, args.concat(Array.prototype.slice.call(arguments)));
+}
+
+fNOP.prototype = this.prototype;
+fbound.prototype = new fNOP();
+
+return fbound;
+
+}
+
+
+    Function.prototype.my_bind = function() {
+      var self = this, // 保存原函数
+        context = Array.prototype.shift.call(arguments), // 保存需要绑定的this上下文
+        // 上一行等价于 context = [].shift.call(arguments);
+        args = Array.prototype.slice.call(arguments); // 剩余的参数转为数组
+      return function() { // 返回一个新函数
+        self.apply(context, Array.prototype.concat.call(args, Array.prototype.slice.call(arguments)));
+      }
+    }
+
+
+
+    //手写原生bind   比较靠谱
+    Function.prototype.bind1=function (context) {
+    if(typeof this !=='function'){
+        throw new Error(`${this.name} is not a function`)
+    }
+    const srcFun=this// 保存原始函数
+    const arg=Array.prototype.slice.call(arguments,1)// 把arguments类数组转为真实数组
+    let noop=function(){}
+    const fBound= function () {
+    if(this instanceof noop){
+        context=this
+    }
+        // 合并新旧参数
+        return srcFun.apply(context,arg.concat(Array.prototype.slice.call(arguments,0)))
+    }
+    if(this.prototype){
+        noop.prototype=this.prototype//维护原型关系，指向原始函数
+    }
+    fBound.prototype=new noop()//新函数的prototype的__proto__指向noop.prototype
+    return fBound
+    }
+
+
+
+
+this.name="jack";
+var demo={
+name:"rose",
+getName:function(){return this.name;}
+}
+var another=demo.getName;
+var another2=another.bind1(demo);
+console.log(another2());//输出rose  这里this指向了demo对象了
+
+</script>
+</html>

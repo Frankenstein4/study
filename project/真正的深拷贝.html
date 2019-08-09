@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+var obj={
+	        userName:'朱丽叶',
+	        age:17,
+	        sex:'女',
+	        hobby:['看书','画画'],
+	        students:{
+	            className:'奧维莉娅',
+	            list:['芬尼','Alen'],
+	            teacher:{
+	                name:'lilisi',
+	                address:'挪威'
+	            }
+	        }
+	    }
+	    
+	    //深拷贝
+	    function deepCopy(obj){
+	        if(typeof obj=="object"&&obj!=null){
+	            var obj1={};
+	            Object.keys(obj).forEach(function(item,index,a){
+					//item代表数组中的每一项，每一项都是一个属性
+	                if(typeof obj[item]=="object"){
+	                    if(obj[item]==null){
+	                        obj1[item]=null;
+	                    }else if(obj[item] instanceof Array){
+	                        obj1[item]=obj[item].concat();
+	                    }else{
+	                        obj1[item]=deepCopy(obj[item]);
+	                    }
+	                }else if(typeof obj[item]=="function"){
+	                    obj1[item]=obj[item];
+	                    
+	                }else{
+	                    obj1[item]=obj[item];
+	                }
+	            })
+	        }else{
+	            return obj;
+	        }
+	        return obj1;
+	    }
+	    var obj1=deepCopy(obj);
+	    console.log(obj1);
+	    obj.userName="aaa";
+	    console.log(obj1);
+
+</script>
+</html>

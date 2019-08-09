@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>W3Cschool教程 React 实例</title>
-    <script src="./js/react.js"></script>
-    <script src="./js/react-dom.js"></script>
-  </head>
-  <body>
-    <div id="example"></div>
-    <script type="text/babel">
-      var LikeButton = React.createClass({
-        getInitialState: function() {
-          return {liked: false};
-        },
-        handleClick: function(event) {
-          this.setState({liked: !this.state.liked});
-        },
-        render: function() {
-          var text = this.state.liked ? '喜欢' : '不喜欢';
-          return (
-            <p onClick={this.handleClick}>
-              你<b>{text}</b>我。点我切换状态。
-            </p>
-          );
-        }
-      });
+<head>
+<meta charset="UTF-8" />
+<title>React 实例</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
 
-      ReactDOM.render(
-        <LikeButton />,
-        document.getElementById('example')
-      );
-    </script>
-  </body>
+<div id="example"></div>
+<script type="text/babel">
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {isToggleOn: true};
+
+    // 这边绑定是必要的，这样 `this` 才能在回调函数中使用
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState(prevState => ({
+      isToggleOn: !prevState.isToggleOn
+    }));
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Toggle />,
+  document.getElementById('example')
+);
+</script>
+
+</body>
 </html>

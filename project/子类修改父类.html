@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //法一   让子类覆盖父类的fangfa1方法，然后想做什么就做什么
+    class FaTher {
+
+
+
+constructor(Fname){
+
+    this.Fname = Fname
+
+}
+
+fangfa1() {
+
+    // alert(this.Fname)
+
+    console.log(this.Fname)
+
+}
+
+fangfa12 () {
+
+
+
+    console.log(this.Fname)
+
+}
+
+}
+
+
+
+// 定义子类继承父类
+
+class Son extends FaTher{
+
+
+
+constructor(Fname, sub){
+
+    super(Fname)
+
+    this.sub = sub
+
+}
+
+fangfa1() {
+
+    super.fangfa1()  // 调用父类方法
+
+    console.log(this.Fname + this.sub);//追加子类自已的业务
+
+}
+
+fangfa11() {
+
+    // alert(this.Fname + this.sub);
+
+    console.log(this.Fname + this.sub)
+
+}
+
+}
+
+var son1 = new Son('123', '321')
+
+son1.fangfa1()
+
+
+
+
+
+
+
+
+
+
+
+//法二
+// 子类是无法修改父类的方法的哦，只能够覆盖父类的方法。
+
+// 你想要警告框输出Frame和sub的话，可以在Son中重新定义一个fangfa1方法，在里面写逻辑。
+
+// 代码如下：
+
+
+
+class Son extends faTher {
+
+  constructor(Fname, sub) {
+
+    super(Fname);
+
+    this.sub = sub;
+
+  }
+
+  // 会把父类的fangfa1方法遮盖掉
+
+  fangfa1() {
+
+    alert(this.Fname + this.sub);
+
+  }
+
+}
+
+var son1 = new Son("123", "321");
+
+// 这里调用的是子类的fangfa1方法而不是父类的fangfa1方法
+
+son1.fangfa1();
+
+
+
+
+
+
+
+</script>
+</html>
