@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>class面向对象编程</title>
+	</head>
+	<body>
+	</body>
+	<script>
+	    
+	       function Student(name){
+	           this.name=name;
+	       }
+	       Student.prototype.hello=function(){
+	           alert("hello"+this.name);
+	       }
+	       class Primary extends Student{
+            constructor(name,grade){
+                super(name);
+                this.grade=grade;
+                this.myGrade();
+            }
+            myGrade(){
+                alert("hi"+this.grade)
+            }
+            }
+	       var a=new Primary("小红",88);
+           //a.hello();
+          // a.myGrade()
+	       //class关键字
+	       class Student1{
+	           constructor(name){
+	               this.name=name;
+	           }
+	           hello(){
+	               alert("hello"+this.name);
+	           }
+	       }
+	       var b=new Student1("苏东坡");
+           b.hello();
+	</script>
+</html>
